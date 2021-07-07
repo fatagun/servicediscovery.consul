@@ -5,6 +5,9 @@ using Refit;
 
 namespace ServiceDiscovery.Consul.Sandbox.Mvc
 {
+    // ya bunun namespace'inden
+    // yada atrbiute
+    //[ServiceResolutionName("servicediscovery.consul.sandbox.api")]
     public interface IWeatherForecastApi
     {
         [Get("/WeatherForecast")]

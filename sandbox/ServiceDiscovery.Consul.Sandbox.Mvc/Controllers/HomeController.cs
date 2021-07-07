@@ -9,6 +9,14 @@ using Microsoft.Extensions.Logging;
 using Refit;
 using ServiceDiscovery.Consul.Sandbox.Mvc.Models;
 
+
+// Refit registration methods
+// 1 refit registration esnasinda, uygulama start olurken, yada lazy, 1..N (N load balancing)
+// delegatinghandler ile, uygulama calisirken, her N dakika da bir service discovery, 1 sefer aiyoruz cacheliyoruz, N dakika sonra tekrar aliyoruz, fresh copy aliyoruz. 
+
+
+//Service registary resolving
+// 
 namespace ServiceDiscovery.Consul.Sandbox.Mvc.Controllers
 {
     public class HomeController : Controller
@@ -37,10 +45,10 @@ namespace ServiceDiscovery.Consul.Sandbox.Mvc.Controllers
 
             var add = serviceResponse.FirstOrDefault(e=> e.Key == "servicediscovery.consul.sandbox.api");
 
-            var u = add.Value.Address+":"+add.Value.Port;
+            var serviceaccessurl = add.Value.Address+":"+add.Value.Port;
 
-            var gitHubApi = RestService.For<IWeatherForecastApi>(u);
-            var weather = await gitHubApi.GetWeather();
+            var apiclient = RestService.For<IWeatherForecastApi>(serviceaccessurl);
+            var weather = await apiclient.GetWeather();
 
             Console.WriteLine(weather.First().temperatureC);
             Console.WriteLine(weather.First().temperatureF);

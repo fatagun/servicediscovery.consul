@@ -47,6 +47,8 @@ namespace ServiceDiscovery.Consul
             }
 
             var uri = new Uri(address);
+            // Assembly / Solution 
+
             _registrationId = $"{_consulOptions.Value.ServiceId}";
 
             var registration = new AgentServiceRegistration()
